@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Trophy, Star, Clock, ChevronRight, ChevronLeft } from 'lucide-react'
 import MainFeature from '../components/MainFeature'
+import ArcadeBackgroundSVG from '../components/svg/ArcadeBackgroundSVG'
+import PacManSVG from '../components/svg/PacManSVG'
+import TetrisSVG from '../components/svg/TetrisSVG'
+import SpaceInvadersSVG from '../components/svg/SpaceInvadersSVG'
+import DonkeyKongSVG from '../components/svg/DonkeyKongSVG'
+import GalagaSVG from '../components/svg/GalagaSVG'
+import FroggerSVG from '../components/svg/FroggerSVG'
 
 const FEATURED_GAMES = [
   {
@@ -10,7 +17,7 @@ const FEATURED_GAMES = [
     year: 1980,
     category: 'Maze',
     description: 'Navigate through a maze while eating dots and avoiding ghosts.',
-    image: 'https://cdn.pixabay.com/photo/2021/02/11/15/40/pacman-6005842_1280.png',
+    svgComponent: PacManSVG,
     difficulty: 'Medium',
     highScore: 999999
   },
@@ -20,7 +27,7 @@ const FEATURED_GAMES = [
     year: 1984,
     category: 'Puzzle',
     description: 'Manipulate falling blocks to create complete rows without gaps.',
-    image: 'https://cdn.pixabay.com/photo/2016/09/07/11/37/tetris-1651650_1280.jpg',
+    svgComponent: TetrisSVG,
     difficulty: 'Easy',
     highScore: 500000
   },
@@ -30,7 +37,7 @@ const FEATURED_GAMES = [
     year: 1978,
     category: 'Shooter',
     description: 'Defend Earth from waves of descending alien invaders.',
-    image: 'https://cdn.pixabay.com/photo/2013/07/12/14/45/space-invaders-148825_1280.png',
+    svgComponent: SpaceInvadersSVG,
     difficulty: 'Hard',
     highScore: 750000
   },
@@ -40,7 +47,7 @@ const FEATURED_GAMES = [
     year: 1981,
     category: 'Platform',
     description: 'Rescue the princess by climbing ladders and avoiding barrels.',
-    image: 'https://cdn.pixabay.com/photo/2021/02/11/15/40/donkey-kong-6005839_1280.png',
+    svgComponent: DonkeyKongSVG,
     difficulty: 'Hard',
     highScore: 850000
   },
@@ -50,7 +57,7 @@ const FEATURED_GAMES = [
     year: 1981,
     category: 'Shooter',
     description: 'Destroy insect-like aliens while avoiding their attacks.',
-    image: 'https://cdn.pixabay.com/photo/2021/02/11/15/40/galaga-6005841_1280.png',
+    svgComponent: GalagaSVG,
     difficulty: 'Medium',
     highScore: 700000
   },
@@ -60,7 +67,7 @@ const FEATURED_GAMES = [
     year: 1981,
     category: 'Action',
     description: 'Guide frogs across a busy road and hazardous river.',
-    image: 'https://cdn.pixabay.com/photo/2021/02/11/15/40/frogger-6005840_1280.png',
+    svgComponent: FroggerSVG,
     difficulty: 'Medium',
     highScore: 600000
   }
@@ -113,7 +120,9 @@ const Home = () => {
     <div className="space-y-8">
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface-800 to-surface-900 border border-primary/30">
-        <div className="absolute inset-0 bg-[url('https://cdn.pixabay.com/photo/2017/07/08/15/18/arcade-2484542_1280.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-opacity-20">
+          <ArcadeBackgroundSVG className="w-full h-full opacity-20" />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-surface-900/70 to-transparent"></div>
         
         <div className="relative z-10 px-6 py-12 md:py-20 text-center">
@@ -201,57 +210,58 @@ const Home = () => {
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {filteredGames.slice(currentSlide * 3, currentSlide * 3 + 3).map(game => (
-                <motion.div
-                  key={game.id}
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="arcade-card group cursor-pointer"
-                  onClick={() => setSelectedGame(game)}
-                >
-                  <div className="relative h-48 mb-4 overflow-hidden rounded-md">
-                    <img 
-                      src={game.image} 
-                      alt={game.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-surface-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">
-                          {game.category}
-                        </span>
-                        <span className="flex items-center text-sm bg-surface-800/80 backdrop-blur-sm px-2 py-1 rounded">
-                          <Trophy size={14} className="mr-1 text-yellow-400" />
-                          {game.highScore.toLocaleString()}
-                        </span>
+              {filteredGames.slice(currentSlide * 3, currentSlide * 3 + 3).map(game => {
+                const GameSvgComponent = game.svgComponent;
+                return (
+                  <motion.div
+                    key={game.id}
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="arcade-card group cursor-pointer"
+                    onClick={() => setSelectedGame(game)}
+                  >
+                    <div className="relative h-48 mb-4 overflow-hidden rounded-md">
+                      <GameSvgComponent 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-surface-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">
+                            {game.category}
+                          </span>
+                          <span className="flex items-center text-sm bg-surface-800/80 backdrop-blur-sm px-2 py-1 rounded">
+                            <Trophy size={14} className="mr-1 text-yellow-400" />
+                            {game.highScore.toLocaleString()}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-heading mb-2 text-primary group-hover:text-glow">{game.title}</h3>
-                  
-                  <div className="flex justify-between items-center mb-3 text-sm text-surface-300">
-                    <span className="flex items-center">
-                      <Clock size={14} className="mr-1" />
-                      {game.year}
-                    </span>
-                    <span className="flex items-center">
-                      <Star size={14} className="mr-1 text-yellow-400" />
-                      {game.difficulty}
-                    </span>
-                  </div>
-                  
-                  <p className="text-surface-400 text-sm line-clamp-2">{game.description}</p>
-                  
-                  <div className="mt-4 text-right">
-                    <button className="text-primary hover:text-primary-light font-heading text-sm flex items-center ml-auto">
-                      PLAY NOW
-                      <ChevronRight size={16} className="ml-1" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
+                    
+                    <h3 className="text-xl font-heading mb-2 text-primary group-hover:text-glow">{game.title}</h3>
+                    
+                    <div className="flex justify-between items-center mb-3 text-sm text-surface-300">
+                      <span className="flex items-center">
+                        <Clock size={14} className="mr-1" />
+                        {game.year}
+                      </span>
+                      <span className="flex items-center">
+                        <Star size={14} className="mr-1 text-yellow-400" />
+                        {game.difficulty}
+                      </span>
+                    </div>
+                    
+                    <p className="text-surface-400 text-sm line-clamp-2">{game.description}</p>
+                    
+                    <div className="mt-4 text-right">
+                      <button className="text-primary hover:text-primary-light font-heading text-sm flex items-center ml-auto">
+                        PLAY NOW
+                        <ChevronRight size={16} className="ml-1" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </AnimatePresence>
           
@@ -310,11 +320,11 @@ const Home = () => {
               onClick={e => e.stopPropagation()}
             >
               <div className="relative h-64 md:h-80">
-                <img 
-                  src={selectedGame.image} 
-                  alt={selectedGame.title}
-                  className="w-full h-full object-cover"
-                />
+                {selectedGame.svgComponent && (
+                  <selectedGame.svgComponent 
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-surface-900/40 to-transparent"></div>
                 <button 
                   className="absolute top-4 right-4 p-2 rounded-full bg-surface-800/80 backdrop-blur-sm"

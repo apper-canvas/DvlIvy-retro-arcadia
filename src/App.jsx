@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import ScanlineSVG from './components/svg/ScanlineSVG'
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -26,7 +27,7 @@ function App() {
     <div className={`min-h-screen bg-gradient-to-br ${darkMode ? 'from-surface-900 to-surface-800' : 'from-surface-100 to-surface-200'} transition-colors duration-300`}>
       {/* CRT Overlay Effect */}
       <div className="pointer-events-none fixed inset-0 bg-gradient-to-b from-transparent to-black opacity-[0.03] z-50"></div>
-      <div className="pointer-events-none fixed inset-0 bg-[url('/scanline.png')] opacity-[0.03] z-50 animate-scanline"></div>
+      <ScanlineSVG className="pointer-events-none fixed inset-0 opacity-[0.03] z-50 animate-scanline" />
       
       {/* Header */}
       <header className="relative border-b border-primary/30 backdrop-blur-sm bg-surface-900/80 dark:bg-surface-900/80 text-surface-100">
