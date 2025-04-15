@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-surface-100 bg-surface-900;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .arcade-btn {
+    @apply relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-pixel text-sm font-medium tracking-wider text-white rounded-md group;
+  }
+  
+  .arcade-btn-primary {
+    @apply arcade-btn bg-primary hover:bg-primary-dark transition-colors duration-300 shadow-[0_0_10px_rgba(255,0,255,0.7)] hover:shadow-[0_0_20px_rgba(255,0,255,0.9)];
+  }
+  
+  .arcade-btn-secondary {
+    @apply arcade-btn bg-secondary hover:bg-secondary-dark transition-colors duration-300 shadow-[0_0_10px_rgba(0,255,255,0.7)] hover:shadow-[0_0_20px_rgba(0,255,255,0.9)];
+  }
+  
+  .arcade-card {
+    @apply relative overflow-hidden rounded-lg border border-primary/30 bg-surface-800/80 backdrop-blur-sm p-4 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_15px_rgba(255,0,255,0.3)];
+  }
+  
+  .game-thumbnail {
+    @apply relative overflow-hidden rounded-md border-2 border-primary/30 transition-all duration-300 hover:border-primary hover:shadow-[0_0_15px_rgba(255,0,255,0.5)];
+  }
+  
+  .game-thumbnail::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-t from-surface-900/80 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  
+  .game-thumbnail:hover::before {
+    @apply opacity-100;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 5px currentColor;
+  }
+  
+  .neon-border {
+    box-shadow: 0 0 5px currentColor, 
+                inset 0 0 5px currentColor;
+  }
+}
+
+/* CRT Effect */
+.crt::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
