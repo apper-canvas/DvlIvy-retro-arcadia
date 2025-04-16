@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Home from './pages/Home'
+import GameDetail from './pages/GameDetail'
 import NotFound from './pages/NotFound'
 import ScanlineSVG from './components/svg/ScanlineSVG'
 
@@ -116,6 +117,7 @@ function App() {
       <main className="container mx-auto px-4 py-8">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/game/:gameId" element={<GameDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
