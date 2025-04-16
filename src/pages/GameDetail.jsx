@@ -18,7 +18,7 @@ const GAMES_DATA = [
     category: 'Maze',
     description: 'Navigate through a maze while eating dots and avoiding ghosts. Pac-Man is one of the most iconic arcade games of all time, known for its simple yet addictive gameplay. Players must eat all the dots in a maze while avoiding four ghosts: Blinky, Pinky, Inky, and Clyde. Special power pellets allow Pac-Man to temporarily eat the ghosts for bonus points.',
     longDescription: 'Pac-Man revolutionized the arcade scene when it was released by Namco in 1980. The game\'s creator, Toru Iwatani, wanted to create a game that would appeal to everyone, including women, which was revolutionary for the time. The game\'s simple yet challenging mechanics made it an instant hit worldwide. The distinctive "wakka wakka" sound as Pac-Man eats dots has become one of the most recognizable audio cues in gaming history. The game has spawned numerous sequels, spin-offs, and has been ported to virtually every gaming platform.',
-    controls: 'Use arrow keys to move Pac-Man through the maze. Avoid ghosts unless you've eaten a power pellet, which temporarily allows you to eat them for bonus points.',
+    controls: 'Use arrow keys to move Pac-Man through the maze. Avoid ghosts unless you\'ve eaten a power pellet, which temporarily allows you to eat them for bonus points.',
     svgComponent: PacManSVG,
     difficulty: 'Medium',
     highScore: 999999,
