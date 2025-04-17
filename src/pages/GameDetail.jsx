@@ -8,6 +8,9 @@ import SpaceInvadersSVG from '../components/svg/SpaceInvadersSVG'
 import DonkeyKongSVG from '../components/svg/DonkeyKongSVG'
 import GalagaSVG from '../components/svg/GalagaSVG'
 import FroggerSVG from '../components/svg/FroggerSVG'
+import GameModal from '../components/games/GameModal'
+import PacMan from '../components/games/PacMan'
+import GameScore from '../components/games/GameScore'
 
 // Game data to be used for the detail pages
 const GAMES_DATA = [
@@ -96,6 +99,9 @@ const GameDetail = () => {
   const [game, setGame] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [gameModalOpen, setGameModalOpen] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [finalScore, setFinalScore] = useState(0)
 
   useEffect(() => {
     // Find the game data based on the gameId parameter
@@ -109,6 +115,26 @@ const GameDetail = () => {
       setLoading(false)
     }
   }, [gameId])
+
+  const handlePlayGame = () => {
+    setGameModalOpen(true)
+    setGameOver(false)
+    setFinalScore(0)
+  }
+
+  const handleCloseGame = () => {
+    setGameModalOpen(false)
+  }
+
+  const handleGameOver = (score) => {
+    setGameOver(true)
+    setFinalScore(score)
+  }
+
+  const handleScore = (score) => {
+    console.log(`Player scored: ${score}`);
+    // Here you could update leaderboards or user stats
+  }
 
   if (loading) {
     return (
@@ -200,7 +226,10 @@ const GameDetail = () => {
         <div className="space-y-6">
           {/* Play Button */}
           <div className="bg-surface-800/50 rounded-lg p-6 border border-primary/20 text-center">
-            <button className="arcade-btn-primary w-full flex items-center justify-center">
+            <button 
+              className="arcade-btn-primary w-full flex items-center justify-center"
+              onClick={handlePlayGame}
+            >
               <Play size={20} className="mr-2" />
               PLAY NOW
             </button>
@@ -304,6 +333,42 @@ const GameDetail = () => {
             })}
         </div>
       </section>
+
+      {/* Game Modal */}
+      <GameModal 
+        isOpen={gameModalOpen} 
+        onClose={handleCloseGame}
+        title={game ? game.title : "Game"}
+      >
+        {gameOver ? (
+          <GameScore 
+            score={finalScore} 
+            highScore={game ? game.highScore : 0}
+            onClose={() => {
+              setGameOver(false);
+              setGameModalOpen(false);
+            }}
+          />
+        ) : (
+          gameId === 'pacman' ? (
+            <PacMan onGameOver={handleGameOver} onScore={handleScore} />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center">
+              <GameSvgComponent className="w-64 h-64 mb-6" />
+              <h3 className="text-xl font-heading text-primary mb-4">Coming Soon!</h3>
+              <p className="text-surface-300 mb-6">
+                This game is currently in development. Check back soon!
+              </p>
+              <button 
+                onClick={handleCloseGame}
+                className="arcade-btn-primary"
+              >
+                Back to Game Details
+              </button>
+            </div>
+          )
+        )}
+      </GameModal>
     </motion.div>
   )
 }
